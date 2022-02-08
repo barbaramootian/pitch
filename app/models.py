@@ -11,10 +11,10 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
     bio=db.Column(db.String(255))
     profile_pic_path=db.Column(db.String())
-    posts = db.relationship('Post', backref='author', lazy=True)
-    comments = db.relationship('Comment', backref='author', lazy=True)
-    likes = db.relationship('Like', backref='author', lazy=True)
-    dislikes = db.relationship('Dislike', backref='author', lazy=True)
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    likes = db.relationship('Like', backref='author', lazy='dynamic')
+    dislikes = db.relationship('Dislike', backref='author', lazy='dynamic')
     pass_secure = db.Column(db.String(255))
 
    
@@ -40,9 +40,9 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     category = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comments = db.relationship('Comment', backref='post', lazy=True)
-    likes = db.relationship('Like', backref='post', lazy=True)
-    dislikes = db.relationship('Dislike', backref='post', lazy=True)
+    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    likes = db.relationship('Like', backref='post', lazy='dynamic')
+    dislikes = db.relationship('Dislike', backref='post', lazy='dynamic')
 
     def save_post(self):
         db.session.add(self)
@@ -75,9 +75,8 @@ class Comment(db.Model):
 class Like(db.Model):
     __tablename__="likes"
     id = db.Column(db.Integer, primary_key=True)
-    comment = db.Column(db.Text, nullable=False)
-    posted_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    posted_date = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
     def save_like(self):
@@ -90,14 +89,13 @@ class Like(db.Model):
         return likes
 
     def __repr__(self):
-        return f"Comment('{self.comment}', '{self.posted_date}')"
+        return f'{self.posted_date}'
 
 class Dislike(db.Model):
     __tablename__="dislikes"
     id = db.Column(db.Integer, primary_key=True)
-    comment = db.Column(db.Text, nullable=False)
-    posted_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    posted_date = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
     def save_dislike(self):
@@ -106,11 +104,11 @@ class Dislike(db.Model):
 
     @classmethod
     def get_dislike(cls, id):
-        dislikes = dislikes.query.filter_by(post_id=id).all()
+        dislikes = Dislike.query.filter_by(post_id=id).all()
         return dislikes
 
     def __repr__(self):
-        return f"Comment('{self.comment}', '{self.posted_date}')"
+        return f'{self.posted_date}'
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

@@ -9,7 +9,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://barbra:reson1234@localhost/oneminute'
 
         #   email configurations
-    MAIL_SERVER = 'bmootian@gmail'
+    MAIL_SERVER = 'bmootian@gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("barbra")

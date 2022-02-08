@@ -1,25 +1,32 @@
-<!-- <div class="navbar navbar-inverse" role="navigation">
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(0, 0, 0, 0.2);">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/"> One Minute Pitch</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-            </ul>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="navbar-nav">
-                <li><a href="">Profile</a></li>
-                <li><a href="{{url_for('auth.register')}}">Sign Up </a></li>
-                <li><a href="{{url_for('auth.login')}}">Sign In</a></li>
-            </ul>
-        </div>
+      <a class="navbar-brand" href="#" style="font-size: 20px;">One Minute Pitch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mt-4 mt-lg-0">
+          <li class="nav-item px-5">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          {% if current_user.is_authenticated %}
+          <li class="nav-item px-5">
+            <li><a href="{{url_for('main.pitch')}}" px-5>New Pitch</a></li>
+          </li>
+          {%else%}
+          <li class="nav-item px-5">
+            <li><a href="">Profile</a></li>
+          </li>
+          <li class="nav-item px-5">
+            <li><a href="{{url_for('auth.register')}}" px-5>Sign Up </a></li>
+          </li>
+          <li class="nav-item px-5">
+            <li><a href="{{url_for('auth.login')}}" px-5>Sign In</a></li>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
     </div>
-</div> -->
+  </nav>

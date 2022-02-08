@@ -5,9 +5,18 @@
     {{data.category}}<br>   
     {{data.content}}
     <hr>
-    <button class="btn btn-success">Upvotes</button>
-    <button class="btn btn-secondary">Downvotes</button>
-    <button class="btn btn-success">Comment</button>
+    <button class="btn btn-info">
+        <a href="{{url_for('main.like',id = data.id)}}">
+          <i class="fa fa-thumbs-up"></i> Upvote {{data.likes.count()}}</a>
+      </button>
+      <button class="btn btn-info">
+        <a href="{{url_for('main.dislike',id = data.id)}}">
+          <i class="fa fa-thumbs-down"></i> Downvote {{data.dislikes.count()}}</a>
+      </button>
+      <button class="btn btn-info">
+        <a href="{{url_for('main.comment',id = data.id)}}"> Comment</a>
+      </button>
+    
     {%endfor%}
 </div>
 
