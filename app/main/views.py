@@ -30,7 +30,7 @@ def pitch():
         Post.save_post(new_post)
         return redirect(url_for('.index'))
     return render_template("pitch.html",pitch_form=pitch)
-
+    
 @main.route('/upvote/<id>', methods=['GET', 'POST'])
 @login_required
 def like(id):
